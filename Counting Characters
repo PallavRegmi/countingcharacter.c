@@ -1,0 +1,77 @@
+/*Pallav Regmi*/
+/*CountingCharacters*/
+
+#include <stdio.h>
+#define IN 1 
+#define OUT 0
+int main()
+{
+  int c, nl, nc,nw,nwtotal, lineNumber, stateLine,  newLineCount, nctotal, state, 
+highest_words, highest_characters,a,b;
+     state = OUT;
+     stateLine = 1;
+     nl = nwtotal = nc = nw = nctotal = 0;
+     highest_words = highest_characters = 0;
+     lineNumber = 1;
+     newLineCount= 0;
+     while ((c=getchar()) !=EOF){
+        ++nc;
+if(c != '\n' || newLineCount>1)
+  {
+    if(lineNumber <= 9 && stateLine!=0)
+      {
+printf("( %d) ", lineNumber);
+lineNumber ++;
+        stateLine = 0;
+      }
+    else if(stateLine != 0)
+      {
+printf("(%d) ", lineNumber);
+lineNumber++;
+        stateLine = 0;
+      }
+    if(c != '\n')
+      {
+printf("%c", c);
+      }
+}
+        if (c=='\n')
+  {
+  ++nl;
+  newLineCount++;
+  if(highest_words < nw)
+    {
+      highest_words = nw;
+      a=nl;
+    }
+  nc = nc -1 ;
+  if(highest_characters < nc)
+    {
+      highest_characters = nc;
+      b=nl;
+    }
+  stateLine = 1;
+  /* Since \n is not counted as the character in the example as well as given 
+file. */
+  printf("[%d, %d]%c",nw, nc,c);
+  nctotal+=nc;
+  nwtotal+=nw;
+  nc=0;
+nw=0;
+  }
+        if(c == ' '||c =='\n'||c=='\t')
+  {
+        state = OUT;
+  }
+else if(state==OUT)
+  {
+        state = IN;
+        ++nw;
+  }
+}
+printf("\n");
+printf("%d lines, %d words, %d characters\n",nl,nwtotal,nctotal);
+printf("Line %d has the most words with %d\n",a,highest_words);
+printf("Line %d has the most characters with %d\n",b,highest_characters);
+return 0;
+}
